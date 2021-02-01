@@ -25,6 +25,6 @@ export function* LoginUsersRequest(payload) {
 
 
 export function* getUsersSaga() {
-  yield takeLatest(types.GET_USERS_REGISTER_REQUEST, registerUsersRequest);
-  yield takeLatest(types.GET_USERS_LOGIN_REQUEST, LoginUsersRequest);
+  yield takeLatest(types.POST_USERS_REGISTER_REQUEST, registerUsersRequest);
+  yield takeLatest(types.POST_USERS_LOGIN_REQUEST, LoginUsersRequest);
 }

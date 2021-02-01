@@ -1,12 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { isLogin } from "../../utils/Shared";
-// import { useHistory } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { isLogin, logout } from "../../utils/Shared";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const history = useHistory();
 
-    return (
+  let UserLoginSuccess = useSelector((state) => state.UsersReducer);
+  const [userLogged, setUserLogged] = useState(false);
+
+  useEffect(() => {
+    setUserLogged(isLogin());
+  }, [UserLoginSuccess, userLogged]);
+
+  const handleClickLogout = () => {
+    setUserLogged(logout());
+    history.push("/register");
+  };
+
+  return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link className="navbar-brand" to="/">
         Navbar
@@ -32,7 +44,7 @@ const Navbar = () => {
           </li>
         </ul>
         <ul className="navbar-nav ">
-          {!isLogin() ? (
+          {!userLogged ? (
             <>
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
@@ -46,8 +58,8 @@ const Navbar = () => {
               </li>
             </>
           ) : (
-            <li className="nav-item">
-              <Link className="nav-link" to="/logout">
+            <li className="nav-item" onClick={() => handleClickLogout()}>
+              <Link className="nav-link" to="">
                 Logout
               </Link>
             </li>

@@ -7,3 +7,9 @@ export const isLogin = () => {
     ? true
     : false;
 };
+
+export const logout =() => {
+  store.getState().UsersReducer = {}
+  return false;
+
+}
