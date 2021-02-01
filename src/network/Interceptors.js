@@ -7,7 +7,6 @@ export const isHandlerEnabled = (config = {}) => {
     : true;
 };
 
-
 export const requestHandler = (request) => {
   if (isHandlerEnabled(request)) {
     store.dispatch(loader(true));
@@ -24,10 +23,8 @@ export const successHandler = (response) => {
 
 export const errorHandler = (error) => {
   if (isHandlerEnabled(error.config)) {
-    error.config.headers["failed"] = "network-error"
+    error.config.headers["failed"] = "network-error";
     store.dispatch(loader(false));
-
   }
   return Promise.reject({ ...error });
 };
-

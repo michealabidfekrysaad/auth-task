@@ -6,7 +6,7 @@ export const axiosInstance = axios.create({
   baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": "none",
+    Authorization: "none",
     "Accept-Language": "en",
     "X-Api-Key": "boilerplate_react",
   },

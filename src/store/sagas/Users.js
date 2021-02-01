@@ -8,7 +8,7 @@ import * as ACTIONS from "../actions/Users";
 export function* registerUsersRequest(payload) {  
   try {
     const response = yield call(Register.RegisterUsers,payload.payload);
-    yield put(ACTIONS.UsersReceive(response));
+    yield put(ACTIONS.RegisterReceive(response));
   } catch (err) {
     console.log(err.config.headers["failed"]);
   }
@@ -17,7 +17,7 @@ export function* registerUsersRequest(payload) {
 export function* LoginUsersRequest(payload) {  
   try {
     const response = yield call(Login.LoginUsers,payload.payload);
-    yield put(ACTIONS.UsersReceive(response));
+    yield put(ACTIONS.LoginReceive(response));
   } catch (err) {
     console.log(err.config.headers["failed"]);
   }
@@ -25,6 +25,6 @@ export function* LoginUsersRequest(payload) {
 
 
 export function* getUsersSaga() {
-  yield takeLatest(types.GET_USERS_REQUEST, registerUsersRequest);
-  yield takeLatest(types.GET_USERS_REQUEST, LoginUsersRequest);
+  yield takeLatest(types.GET_USERS_REGISTER_REQUEST, registerUsersRequest);
+  yield takeLatest(types.GET_USERS_LOGIN_REQUEST, LoginUsersRequest);
 }

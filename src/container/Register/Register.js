@@ -174,8 +174,7 @@ const Register = () => {
     </div>
         : <Loader/>
    
-   
-  
+
   );
 };
 
