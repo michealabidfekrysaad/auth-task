@@ -1,14 +1,23 @@
 import React, { useEffect } from "react";
 import Input from "../../component/Input/Input";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 import Btn from "../../component/Btn/Btn";
 import { useHistory } from "react-router-dom";
 import { LoginRequest } from "../../store/actions/Users";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../component/Loader/Loader";
 
+import { useForm } from "react-hook-form";
+
 const Login = () => {
+  const INITIAL_VALUES = {
+    email: "mahmoud.mostafa@ibtikar.net.sa",
+    password: "test1234",
+  };
+  const { register, handleSubmit, errors, reset, formState } = useForm({
+    defaultValues: INITIAL_VALUES,
+    mode: "onChange",
+  });
+
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader);
@@ -18,70 +27,54 @@ const Login = () => {
     UserLoginSuccess === "OK" && history.push("/");
   }, [UserLoginSuccess, history]);
 
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Must be valid E-mail").required("Required"),
-    password: Yup.string().required("Required"),
-  });
-  const onSubmit = (values, onSubmitProps) => {
-    onSubmitProps.resetForm();
+  const onSubmit = (values) => {
+    reset({ INITIAL_VALUES });
     dispatch(LoginRequest({ values }));
   };
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validationSchema,
-  });
 
   return !loading ? (
     <div className="container">
-      <form onSubmit={formik.handleSubmit} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="form-group">
           <label htmlFor="email">Email address</label>
           <Input
             type="email"
             className={
-              !(formik.errors.email && formik.touched.email)
+              !errors.email
                 ? "form-control"
                 : "form-control border border-danger"
             }
             id="email"
             placeHolder="enter email"
             name="email"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.email}
+            register={register({ required: "Email is required" })}
           />
           <small className="form-text text-muted">
-            {formik.errors.email && formik.touched.email ? (
-              <div className="text-danger">{formik.errors.email}</div>
+            {errors.email ? (
+              <div className="text-danger">{errors.email.message}</div>
             ) : (
               <span>It must be valid email address</span>
             )}
           </small>
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <Input
             type="password"
             className={
-              !(formik.errors.password && formik.touched.password)
+              !errors.password
                 ? "form-control"
                 : "form-control border border-danger"
             }
             id="password"
             name="password"
             placeHolder="enter password"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.password}
+            register={register({ required: "Password is required" })}
           />
           <small className="form-text text-muted">
-            {formik.errors.password && formik.touched.password ? (
-              <div className="text-danger">{formik.errors.password}</div>
+            {errors.password ? (
+              <div className="text-danger">{errors.password.message}</div>
             ) : (
               <span>Enter you register password</span>
             )}
@@ -90,11 +83,9 @@ const Login = () => {
         <Btn
           type="submit"
           content="Submit"
-          isDisabled={!(formik.isValid && formik.dirty)}
+          isDisabled={!formState.isValid}
           className={
-            !(formik.isValid && formik.dirty)
-              ? "btn btn-secondary"
-              : "btn btn-primary"
+            !formState.isValid ? "btn btn-secondary" : "btn btn-primary"
           }
         />
       </form>
