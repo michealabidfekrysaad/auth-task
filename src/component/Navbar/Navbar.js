@@ -14,8 +14,8 @@ const Navbar = () => {
   }, [UserLoginSuccess, userLogged]);
 
   const handleClickLogout = () => {
-    setUserLogged(logout());
-    history.push("/register");
+    setUserLogged(logout())
+    history.push("/register")
   };
 
   return (
