@@ -1,16 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Input from "../../component/Input/Input";
-import * as Yup from "yup";
-import { useFormik } from "formik";
+
 import Btn from "../../component/Btn/Btn";
 import { RegisterRequest } from "../../store/actions/Users";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
 import Loader from "../../component/Loader/Loader";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    mobile_number: "",
+  };
   let userCreated = useSelector((state) => state.UsersReducer.statusText);
+  const { register, handleSubmit, errors, reset, formState, watch } = useForm({
+    defaultValues: initialValues,
+    mode: "onChange",
+  });
+  const password = useRef({});
+  password.current = watch("password", "");
+
   const loading = useSelector((state) => state.loader);
 
   const history = useHistory();
@@ -19,59 +33,41 @@ const Register = () => {
   }, [userCreated, history]);
 
   const dispatch = useDispatch();
-  const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-    mobile_number: "",
-  };
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Required"),
-    email: Yup.string().email("Must be valid E-mail").required("Required"),
-    password: Yup.string().required("Required"),
-    password_confirmation: Yup.string()
-      .oneOf([Yup.ref("password"), ""], "Password must match")
-      .required("Required"),
-    mobile_number: Yup.string()
-      .required("Required")
-      .test(
-        "len",
-        "Must be exactly 10 characters",
-        (val) => val && val.length === 10
-      ),
-  });
-  const onSubmit = (values, onSubmitProps) => {
-    let mobile_number = `+20${values.mobile_number}`;
-    values = { ...values, mobile_number };
-    dispatch(RegisterRequest({ values }));
-    onSubmitProps.resetForm();
-  };
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validationSchema,
-  });
 
-  return ( 
-    !loading ? 
- <div className="container">
-      <form onSubmit={formik.handleSubmit} noValidate>
+  const onSubmit = (values) => {
+    let mobile_number = `+2${values.mobile_number}`;
+    values = { ...values, mobile_number };
+    console.log(values);
+    dispatch(RegisterRequest({ values }));
+    reset({ initialValues });
+  };
+
+  return !loading ? (
+    <div className="container">
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="form-group">
           <label htmlFor="name">UserName</label>
           <Input
             type="text"
-            className="form-control"
+            className={
+              !errors.name
+                ? "form-control"
+                : "form-control border border-danger"
+            }
             id="name"
             placeHolder="enter Username"
             name="name"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.name}
+            register={register({
+              required: "UserName is required",
+              pattern: {
+                value: /^[A-Za-z]+$/,
+                message: "User name must be string",
+              },
+            })}
           />
           <small className="form-text text-muted">
-            {formik.errors.name && formik.touched.name ? (
-              <div className="text-danger">{formik.errors.name}</div>
+            {errors.name ? (
+              <div className="text-danger">{errors.name.message}</div>
             ) : (
               <span>Username is required</span>
             )}
@@ -81,17 +77,25 @@ const Register = () => {
           <label htmlFor="email">Email address</label>
           <Input
             type="email"
-            className="form-control"
+            className={
+              !errors.email
+                ? "form-control"
+                : "form-control border border-danger"
+            }
             id="email"
             placeHolder="enter email"
             name="email"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.email}
+            register={register({
+              required: "Email is required",
+              pattern: {
+                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                message: "Email is not valid",
+              },
+            })}
           />
           <small className="form-text text-muted">
-            {formik.errors.email && formik.touched.email ? (
-              <div className="text-danger">{formik.errors.email}</div>
+            {errors.email ? (
+              <div className="text-danger">{errors.email.message}</div>
             ) : (
               <span>It must be valid email address</span>
             )}
@@ -101,17 +105,25 @@ const Register = () => {
           <label htmlFor="password">Password</label>
           <Input
             type="password"
-            className="form-control"
+            className={
+              !errors.password
+                ? "form-control"
+                : "form-control border border-danger"
+            }
             id="password"
             name="password"
             placeHolder="enter password"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.password}
+            register={register({
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must have at least 8 characters",
+              },
+            })}
           />
           <small className="form-text text-muted">
-            {formik.errors.password && formik.touched.password ? (
-              <div className="text-danger">{formik.errors.password}</div>
+            {errors.password ? (
+              <div className="text-danger">{errors.password.message}</div>
             ) : (
               <span>Recommended strong password</span>
             )}
@@ -121,19 +133,24 @@ const Register = () => {
           <label htmlFor="password_confirmation">Confirm you password</label>
           <Input
             type="password"
-            className="form-control"
+            className={
+              !errors.password_confirmation
+                ? "form-control"
+                : "form-control border border-danger"
+            }
             id="password_confirmation"
             name="password_confirmation"
             placeHolder="confirm your password"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.password_confirmation}
+            register={register({
+              required: "Confirm password is required",
+              validate: (value) =>
+                value === password.current || "The passwords do not match",
+            })}
           />
           <small className="form-text text-muted">
-            {formik.errors.password_confirmation &&
-            formik.touched.password_confirmation ? (
+            {errors.password_confirmation ? (
               <div className="text-danger">
-                {formik.errors.password_confirmation}
+                {errors.password_confirmation.message}
               </div>
             ) : (
               <span>the same as your password above</span>
@@ -144,17 +161,28 @@ const Register = () => {
           <label htmlFor="mobile_number">Phone number</label>
           <Input
             type="number"
-            className="form-control"
+            className={
+              !errors.mobile_number
+                ? "form-control"
+                : "form-control border border-danger"
+            }
             id="mobile_number"
             name="mobile_number"
             placeHolder="enter phone number"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.mobile_number}
+            register={register({
+              required: "Phone number is required",
+              validate: (value) =>
+                value.length === 11 ||
+                `${
+                  value.length <= 11
+                    ? `Remain ${11 - value.length} number to be valid`
+                    : `Remove ${value.length - 11} number to be valid`
+                }`,
+            })}
           />
           <small className="form-text text-muted">
-            {formik.errors.mobile_number && formik.touched.mobile_number ? (
-              <div className="text-danger">{formik.errors.mobile_number}</div>
+            {errors.mobile_number ? (
+              <div className="text-danger">{errors.mobile_number.message}</div>
             ) : (
               <span>Must be valid number</span>
             )}
@@ -163,18 +191,15 @@ const Register = () => {
         <Btn
           type="submit"
           content="Submit"
-          isDisabled={!(formik.isValid && formik.dirty)}
+          isDisabled={!formState.isValid}
           className={
-            !(formik.isValid && formik.dirty)
-              ? "btn btn-secondary"
-              : "btn btn-primary"
+            !formState.isValid ? "btn btn-secondary" : "btn btn-primary"
           }
         />
       </form>
     </div>
-        : <Loader/>
-   
-
+  ) : (
+    <Loader />
   );
 };
 

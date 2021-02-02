@@ -9,12 +9,12 @@ import Loader from "../../component/Loader/Loader";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const INITIAL_VALUES = {
+  const initialValues = {
     email: "mahmoud.mostafa@ibtikar.net.sa",
     password: "test1234",
   };
   const { register, handleSubmit, errors, reset, formState } = useForm({
-    defaultValues: INITIAL_VALUES,
+    defaultValues: initialValues,
     mode: "onChange",
   });
 
@@ -28,7 +28,7 @@ const Login = () => {
   }, [UserLoginSuccess, history])
 
   const onSubmit = (values) => {
-    reset({ INITIAL_VALUES });
+    reset({ initialValues });
     dispatch(LoginRequest({ values }));
   };
 
