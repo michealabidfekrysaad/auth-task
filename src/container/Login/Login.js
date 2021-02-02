@@ -25,7 +25,7 @@ const Login = () => {
 
   useEffect(() => {
     UserLoginSuccess === "OK" && history.push("/");
-  }, [UserLoginSuccess, history]);
+  }, [UserLoginSuccess, history])
 
   const onSubmit = (values) => {
     reset({ INITIAL_VALUES });
