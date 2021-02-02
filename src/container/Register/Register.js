@@ -37,7 +37,6 @@ const Register = () => {
   const onSubmit = (values) => {
     let mobile_number = `+2${values.mobile_number}`;
     values = { ...values, mobile_number };
-    console.log(values);
     dispatch(RegisterRequest({ values }));
     reset({ initialValues });
   };
