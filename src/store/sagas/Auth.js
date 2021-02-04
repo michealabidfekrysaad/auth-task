@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import * as Register from "../../network/Register/Register";
-import * as Login from "../../network/Login/Login";
+import * as Register from "../../network/Register";
+import * as Login from "../../network/Login";
 import * as types from "../types/Auth";
 import * as ACTIONS from "../actions/Auth";
 

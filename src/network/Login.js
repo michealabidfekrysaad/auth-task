@@ -1,5 +1,5 @@
-import { axiosInstance } from "../index";
-import * as headers from "../../utils/Constants";
+import { axiosInstance } from "./index";
+import * as headers from "../utils/Constants";
 
 export const LoginUsers = async (data) => {
   const client_id = headers.client_id;
