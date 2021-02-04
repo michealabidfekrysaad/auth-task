@@ -13,8 +13,7 @@ const Register = () => {
   let userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
   // let errors = useSelector((state) => state.AuthReducer);
-
-  
+  // ana gebt el errors w mosh 3aref atba3ha ta7t kol input
 
   const history = useHistory();
   useEffect(() => {
