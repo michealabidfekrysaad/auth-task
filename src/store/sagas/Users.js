@@ -7,10 +7,7 @@ import * as ACTIONS from "../actions/Users";
 
 export function* registerUsersRequest(action) {  
   try {
-    console.log(action.payload);
-    
     const response = yield call(Register.RegisterUsers,action.payload);
-    console.log(response);
     yield put(ACTIONS.RegisterReceive(response));
   } catch (err) {
     console.log(err.config.headers["failed"]);

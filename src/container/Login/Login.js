@@ -12,11 +12,11 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader);
-  let UserLoginSuccess = useSelector((state) => state.UsersReducer.statusText);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    UserLoginSuccess === "OK" && history.push("/");
-  }, [UserLoginSuccess, history]);
+    token && history.push("/");
+  }, [token, history]);
 
   const initialValues = {
     email: "",
@@ -28,7 +28,7 @@ const Login = () => {
   });
   const onSubmit = (values, onSubmitProps) => {
     onSubmitProps.resetForm();
-    dispatch(LoginRequest({ values }));
+    dispatch(LoginRequest(values));
   };
   const formik = useFormik({
     initialValues,

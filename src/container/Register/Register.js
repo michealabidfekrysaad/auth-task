@@ -44,7 +44,7 @@ const Register = () => {
   const onSubmit = (values, onSubmitProps) => {
     let mobile_number = `+20${values.mobile_number}`;
     values = { ...values, mobile_number };
-    dispatch(RegisterRequest({ values }));
+    dispatch(RegisterRequest(values));
     onSubmitProps.resetForm();
   };
   const formik = useFormik({
@@ -53,9 +53,8 @@ const Register = () => {
     validationSchema,
   });
 
-  return ( 
-    !loading ? 
- <div className="container">
+  return !loading ? (
+    <div className="container">
       <form onSubmit={formik.handleSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="name">UserName</label>
@@ -172,9 +171,8 @@ const Register = () => {
         />
       </form>
     </div>
-        : <Loader/>
-   
-
+  ) : (
+    <Loader />
   );
 };
 
