@@ -1,8 +1,9 @@
 import { axiosInstance } from "../index";
+import * as headers from "../../utils/Constants";
 
 export const LoginUsers = async (data) => {
-  let client_id = "2";
-  let client_secret = "fhMZQxfVREJrII50IeN4ThIZCerdOFjxiRGu7Lc0";  
+  const client_id = headers.client_id;
+  const client_secret = headers.client_secret;
   return await axiosInstance.post(
     `api/v1/users/login`,
     { ...data, client_id, client_secret },
