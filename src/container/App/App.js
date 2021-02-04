@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from "../../store/index";
 import Navbar from "../../component/Navbar/Navbar";
 import Loader from "../../component/Loader/Loader";
-import PrivateRoute from "../../component/PrivateRoute/PrivateRoute";
+import PrivateRoute from "../../routes/typesRoutes/PrivateRoute";
+import PublicRoute from "../../routes/typesRoutes/PublicRoute";
 // import { useSelector } from "react-redux";
 
 
@@ -25,8 +26,8 @@ const AppComp = () => {
               <section className="container-fluid mt-3">
                 <Switch>
                   <PrivateRoute path="/" exact component={Home} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/register" component={Register} />
+                  <PublicRoute path="/login" component={Login} />
+                  <PublicRoute path="/register" component={Register} />
                 </Switch>
               </section>
             </main>
