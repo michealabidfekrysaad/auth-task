@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const history = useHistory();
 
-  let UserLoginSuccess = useSelector((state) => state.UsersReducer);
+  let UserLoginSuccess = useSelector((state) => state.AuthReducer);
   const [userLogged, setUserLogged] = useState(false);
 
   useEffect(() => {

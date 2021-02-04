@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as Register from "../../network/Register/Register";
 import * as Login from "../../network/Login/Login";
-import * as types from "../types/Users";
-import * as ACTIONS from "../actions/Users";
+import * as types from "../types/Auth";
+import * as ACTIONS from "../actions/Auth";
 
 
 export function* registerUsersRequest(action) {  
@@ -26,6 +26,6 @@ export function* LoginUsersRequest(payload) {
 
 
 export function* getUsersSaga() {
-  yield takeLatest(types.POST_USERS_REGISTER_REQUEST, registerUsersRequest);
-  yield takeLatest(types.POST_USERS_LOGIN_REQUEST, LoginUsersRequest);
+  yield takeLatest(types.POST_AUTH_REGISTER_REQUEST, registerUsersRequest);
+  yield takeLatest(types.POST_AUTH_LOGIN_REQUEST, LoginUsersRequest);
 }

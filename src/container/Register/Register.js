@@ -3,14 +3,14 @@ import Input from "../../component/Input/Input";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Btn from "../../component/Btn/Btn";
-import { RegisterRequest } from "../../store/actions/Users";
+import { RegisterRequest } from "../../store/actions/Auth";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
 import Loader from "../../component/Loader/Loader";
 
 const Register = () => {
-  let userCreated = useSelector((state) => state.UsersReducer.statusText);
+  let userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
 
   const history = useHistory();

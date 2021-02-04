@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Btn from "../../component/Btn/Btn";
 import { useHistory } from "react-router-dom";
-import { LoginRequest } from "../../store/actions/Users";
+import { LoginRequest } from "../../store/actions/Auth";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../component/Loader/Loader";
 
@@ -13,7 +13,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader);
   const token = localStorage.getItem("token");
-  let userLoggedIn = useSelector((state) => state.UsersReducer);
+  let userLoggedIn = useSelector((state) => state.AuthReducer);
 
   useEffect(() => {
     userLoggedIn && token && history.push("/");
