@@ -5,9 +5,12 @@ import * as types from "../types/Users";
 import * as ACTIONS from "../actions/Users";
 
 
-export function* registerUsersRequest(payload) {  
+export function* registerUsersRequest(action) {  
   try {
-    const response = yield call(Register.RegisterUsers,payload.payload);
+    console.log(action.payload);
+    
+    const response = yield call(Register.RegisterUsers,action.payload);
+    console.log(response);
     yield put(ACTIONS.RegisterReceive(response));
   } catch (err) {
     console.log(err.config.headers["failed"]);
@@ -17,7 +20,8 @@ export function* registerUsersRequest(payload) {
 export function* LoginUsersRequest(payload) {  
   try {
     const response = yield call(Login.LoginUsers,payload.payload);
-    yield put(ACTIONS.LoginReceive(response));
+    localStorage.setItem("token", response.data.data.access_token);
+    yield put(ACTIONS.LoginReceive(response.data.data.user));
   } catch (err) {
     console.log(err.config.headers["failed"]);
   }

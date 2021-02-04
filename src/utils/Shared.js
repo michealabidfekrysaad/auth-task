@@ -1,15 +1,10 @@
-import store from "../store/index";
-
 export const isLogin = () => {
-  let { UsersReducer } = store.getState();
+  const token = localStorage.getItem("token");
 
-  return UsersReducer.status === 200 && UsersReducer.statusText === "OK"
-    ? true
-    : false;
+  return token ? true : false;
 };
 
-export const logout =() => {
-  store.getState().UsersReducer = {}
+export const logout = () => {
+  localStorage.removeItem("token");
   return false;
-
-}
+};
