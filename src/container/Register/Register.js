@@ -12,6 +12,9 @@ import Loader from "../../component/Loader/Loader";
 const Register = () => {
   let userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
+  // let errors = useSelector((state) => state.AuthReducer);
+
+  
 
   const history = useHistory();
   useEffect(() => {
