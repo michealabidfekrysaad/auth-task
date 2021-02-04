@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { isLogin, logout } from "../../utils/Shared";
+import { isLogin, logout } from "../../utils/Auth";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {

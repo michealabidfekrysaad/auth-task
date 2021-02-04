@@ -13,10 +13,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader);
   const token = localStorage.getItem("token");
+  let userLoggedIn = useSelector((state) => state.UsersReducer);
 
   useEffect(() => {
-    token && history.push("/");
-  }, [token, history]);
+    userLoggedIn && token && history.push("/");
+  }, [userLoggedIn, token, history]);
 
   const initialValues = {
     email: "",
