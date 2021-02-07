@@ -8,12 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
 import Loader from "../../component/Loader/Loader";
+import ErrorMessage from "../../component/ErrorMessage/ErrorMessage";
 
 const Register = () => {
   let userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
-  // let errors = useSelector((state) => state.AuthReducer);
-  // ana gebt el errors w mosh 3aref atba3ha ta7t kol input
+  let errors = useSelector((state) => state.AuthReducer);
 
   const history = useHistory();
   useEffect(() => {
@@ -73,8 +73,10 @@ const Register = () => {
           <small className="form-text text-muted">
             {formik.errors.name && formik.touched.name ? (
               <div className="text-danger">{formik.errors.name}</div>
+            ) : errors.length ? (
+              <ErrorMessage type="name" errors={errors} />
             ) : (
-              <span>Username is required</span>
+              <span>UserName is required</span>
             )}
           </small>
         </div>
@@ -93,8 +95,10 @@ const Register = () => {
           <small className="form-text text-muted">
             {formik.errors.email && formik.touched.email ? (
               <div className="text-danger">{formik.errors.email}</div>
+            ) : errors.length ? (
+              <ErrorMessage type="email" errors={errors} />
             ) : (
-              <span>It must be valid email address</span>
+              <span>It must be valid E-mail adress</span>
             )}
           </small>
         </div>
@@ -113,6 +117,8 @@ const Register = () => {
           <small className="form-text text-muted">
             {formik.errors.password && formik.touched.password ? (
               <div className="text-danger">{formik.errors.password}</div>
+            ) : errors.length ? (
+              <ErrorMessage type="password" errors={errors} />
             ) : (
               <span>Recommended strong password</span>
             )}
@@ -136,6 +142,8 @@ const Register = () => {
               <div className="text-danger">
                 {formik.errors.password_confirmation}
               </div>
+            ) : errors.length ? (
+              <ErrorMessage type="password_confirmation" errors={errors} />
             ) : (
               <span>the same as your password above</span>
             )}
@@ -156,8 +164,10 @@ const Register = () => {
           <small className="form-text text-muted">
             {formik.errors.mobile_number && formik.touched.mobile_number ? (
               <div className="text-danger">{formik.errors.mobile_number}</div>
+            ) : errors.length ? (
+              <ErrorMessage type="mobile_number" errors={errors} />
             ) : (
-              <span>Must be valid number</span>
+              <span>Must be valid phone number</span>
             )}
           </small>
         </div>
