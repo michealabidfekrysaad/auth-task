@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import Input from "../../component/Input/Input";
+import Input from "../component/Input/Input";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import Btn from "../../component/Btn/Btn";
+import Btn from "../component/Btn/Btn";
 import { useHistory } from "react-router-dom";
-import { LoginRequest } from "../../store/actions/Auth";
+import { LoginRequest } from "../store/actions/Auth";
 import { useSelector, useDispatch } from "react-redux";
-import Loader from "../../component/Loader/Loader";
+import Loader from "../component/Loader/Loader";
 
 const Login = () => {
   const history = useHistory();

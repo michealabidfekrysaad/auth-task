@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import Input from "../../component/Input/Input";
+import Input from "../component/Input/Input";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import Btn from "../../component/Btn/Btn";
-import { RegisterRequest } from "../../store/actions/Auth";
+import Btn from "../component/Btn/Btn";
+import { RegisterRequest } from "../store/actions/Auth";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
-import Loader from "../../component/Loader/Loader";
-import ErrorMessage from "../../component/ErrorMessage/ErrorMessage";
+import Loader from "../component/Loader/Loader";
+import ErrorMessage from "../component/ErrorMessage/ErrorMessage";
 
 const Register = () => {
   let userCreated = useSelector((state) => state.AuthReducer.statusText);
