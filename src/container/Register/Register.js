@@ -11,12 +11,14 @@ import { useForm } from "react-hook-form";
 
 const Register = () => {
   const initialValues = {
+    photo: "",
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
     mobile_number: "",
   };
+
   let userCreated = useSelector((state) => state.UsersReducer.statusText);
   const { register, handleSubmit, errors, reset, formState, watch } = useForm({
     defaultValues: initialValues,
@@ -37,6 +39,7 @@ const Register = () => {
   const onSubmit = (values) => {
     let mobile_number = `+2${values.mobile_number}`;
     values = { ...values, mobile_number };
+    console.log(values.photo[0]);
     dispatch(RegisterRequest({ values }));
     reset({ initialValues });
   };
@@ -44,6 +47,35 @@ const Register = () => {
   return !loading ? (
     <div className="container">
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div className="form-group">
+          <label htmlFor="photo">Upload Image</label>
+          <Input
+            type="file"
+            className={
+              !errors.photo
+                ? "form-control"
+                : "form-control border border-danger"
+            }
+            id="photo"
+            name="photo"
+            register={register({
+              required: "Image is required",
+              validate: (value) =>
+                value[0].type.slice(-4) === "/png" ||
+                value[0].type.slice(-4) === "/jpg" ||
+                value[0].type.slice(-4) === "jpeg" ||
+                "Image is not valid",
+            })}
+          />
+          <small className="form-text text-muted">
+            {errors.photo ? (
+              <div className="text-danger">{errors.photo.message}</div>
+            ) : (
+              <span>Image is required</span>
+            )}
+          </small>
+        </div>
+
         <div className="form-group">
           <label htmlFor="name">UserName</label>
           <Input
