@@ -1,35 +1,16 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import store from "../../store/index";
-import Navbar from "../../component/Navbar/Navbar";
-import Loader from "../../component/Loader/Loader";
-import PrivateRoute from "../../routes/typesRoutes/PrivateRoute";
-import PublicRoute from "../../routes/typesRoutes/PublicRoute";
-import * as lazyLoading from "../../routes/LazyLoading";
-
-const Login = lazyLoading.Login;
-const Register = lazyLoading.Register;
-const Home = lazyLoading.Home;
+import Routes from "../../routes/Routes";
 
 const AppComp = () => {
   return (
     <Provider store={store}>
       <div>
         <Router>
-          <Suspense fallback={<Loader />}>
-            <main className="container-fluid mt-1">
-              <Navbar />
-              <section className="container-fluid mt-3">
-                <Switch>
-                  <PrivateRoute path="/" exact component={Home} />
-                  <PublicRoute path="/login" component={Login} />
-                  <PublicRoute path="/register" component={Register} />
-                </Switch>
-              </section>
-            </main>
-          </Suspense>
+          <Routes />
         </Router>
       </div>
     </Provider>
