@@ -23,6 +23,7 @@ export function* LoginUsersRequest(payload) {
   }
 }
 
+
 export function* getUsersSaga() {
   yield takeLatest(types.POST_AUTH_REGISTER_REQUEST, registerUsersRequest);
   yield takeLatest(types.POST_AUTH_LOGIN_REQUEST, LoginUsersRequest);
