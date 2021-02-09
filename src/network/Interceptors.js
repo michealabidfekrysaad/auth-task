@@ -23,7 +23,9 @@ export const successHandler = (response) => {
 
 export const errorHandler = (error) => {
   if (isHandlerEnabled(error.config)) {
-    error.config.headers["failed"] = "network-error";
+    // error.config.headers["failed"] = "network-error";
+    // kont bagarab azawed  headers mn el request
+    // 7aleyan heya malhash lazma
     store.dispatch(loader(false));
   }
   return Promise.reject({ ...error });
