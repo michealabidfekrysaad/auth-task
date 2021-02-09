@@ -12,9 +12,9 @@ import Loader from "../component/Loader/Loader";
 import ErrorMessage from "../component/ErrorMessage/ErrorMessage";
 
 const Register = () => {
-  let userCreated = useSelector((state) => state.AuthReducer.statusText);
+  const userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
-  let errors = useSelector((state) => state.AuthReducer);
+  const errors = useSelector((state) => state.AuthReducer);
 
   const history = useHistory();
   useEffect(() => {
@@ -47,7 +47,7 @@ const Register = () => {
       ),
   });
   const onSubmit = (values, onSubmitProps) => {
-    let mobile_number = `+20${values.mobile_number}`;
+    const mobile_number = `+20${values.mobile_number}`;
     values = { ...values, mobile_number };
 
     const Image = new FormData();

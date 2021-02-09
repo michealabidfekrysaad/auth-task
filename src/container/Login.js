@@ -13,8 +13,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader);
   const token = localStorage.getItem("token");
-  let userLoggedIn = useSelector((state) => state.AuthReducer);
-  let error = useSelector((state) => state.AuthReducer);
+  const userLoggedIn = useSelector((state) => state.AuthReducer);
+  const error = useSelector((state) => state.AuthReducer);
 
   useEffect(() => {
     userLoggedIn && token && history.push("/");
