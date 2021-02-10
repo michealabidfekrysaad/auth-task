@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Btn from "../component/Btn/Btn";
 import { RegisterRequest } from "../store/actions/Auth";
-import { ImageUpload } from "../store/actions/ImageUpload";
 import { useSelector, useDispatch } from "react-redux";
 
 import Loader from "../component/Loader/Loader";
@@ -16,7 +15,6 @@ const Register = () => {
 
   const dispatch = useDispatch();
   const initialValues = {
-    file: "",
     name: "",
     email: "",
     password: "",
@@ -24,7 +22,6 @@ const Register = () => {
     mobile_number: "",
   };
   const validationSchema = Yup.object({
-    file: Yup.mixed().required("Image is required"),
     name: Yup.string().required("Required"),
     email: Yup.string().email("Must be valid E-mail").required("Required"),
     password: Yup.string().required("Required"),
@@ -42,13 +39,10 @@ const Register = () => {
   const onSubmit = (values, onSubmitProps) => {
     const mobile_number = `+20${values.mobile_number}`;
     values = { ...values, mobile_number };
-    const Image = new FormData();
-    Image.append("file", values.file);
-    dispatch(ImageUpload(Image));
-    delete values["file"];
     dispatch(RegisterRequest(values));
     onSubmitProps.resetForm();
   };
+
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -60,31 +54,7 @@ const Register = () => {
       <form
         onSubmit={formik.handleSubmit}
         noValidate
-        encType="multipart/form-data"
       >
-        <div className="form-group">
-          <label htmlFor="file">Upload image</label>
-          <Input
-            type="file"
-            className="form-control"
-            id="file"
-            name="file"
-            onBlur={formik.handleBlur}
-            onChange={(event) =>
-              formik.setFieldValue("file", event.target.files[0])
-            }
-          />
-          <small className="form-text text-muted">
-            {formik.errors.file && formik.touched.file ? (
-              <div className="text-danger">{formik.errors.file}</div>
-            ) : errors.length ? (
-              <ErrorMessage type="file" errors={errors} />
-            ) : (
-              <span>Image is required</span>
-            )}
-          </small>
-        </div>
-
         <div className="form-group">
           <label htmlFor="name">UserName</label>
           <Input

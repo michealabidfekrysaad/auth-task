@@ -1,14 +1,13 @@
 import axios from "axios";
 import { requestHandler, successHandler, errorHandler } from "./Interceptors";
-import { baseURL, authorizeBearer } from "../utils/Constants";
+import { baseURL } from "../utils/Constants";
+const token = localStorage.getItem("token");
 
 export const axiosInstance = axios.create({
   baseURL: baseURL,
   headers: {
-    // i used const token because i make upload with register and in this case i dont have
-    // token in the local sorage yet
     "Content-Type": "application/json",
-    Authorization: authorizeBearer,
+    Authorization: token && `Bearer ${token}`,
     "Accept-Language": "en",
     "X-Api-Key": "boilerplate_react",
   },
