@@ -15,11 +15,12 @@ const Register = () => {
   const userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
   const errors = useSelector((state) => state.AuthReducer);
-
   const history = useHistory();
+  
   useEffect(() => {
     userCreated === "Created" && history.push("/login");
   }, [userCreated, history]);
+  // to can redirect to login page
 
   const dispatch = useDispatch();
   const initialValues = {

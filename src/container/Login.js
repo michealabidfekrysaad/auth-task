@@ -13,12 +13,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader);
   const token = localStorage.getItem("token");
-  const userLoggedIn = useSelector((state) => state.AuthReducer);
+  // const userLoggedIn = useSelector((state) => state.AuthReducer);
   const error = useSelector((state) => state.AuthReducer);
 
+
   useEffect(() => {
-    userLoggedIn && token && history.push("/");
-  }, [userLoggedIn, token, history]);
+    token && history.push("/");
+  }, [token, history]);
+  // to can make redirect after successfull login
 
   const initialValues = {
     email: "",
@@ -30,7 +32,7 @@ const Login = () => {
   });
   const onSubmit = (values, onSubmitProps) => {
     onSubmitProps.resetForm();
-    dispatch(LoginRequest(values));
+    dispatch(LoginRequest(values));    
   };
   const formik = useFormik({
     initialValues,

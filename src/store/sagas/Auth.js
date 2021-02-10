@@ -4,6 +4,7 @@ import * as Login from "../../network/Login";
 import * as types from "../types/Auth";
 import * as ACTIONS from "../actions/Auth";
 
+
 export function* registerUsersRequest(action) {
   try {
     const response = yield call(Register.RegisterUsers, action.payload);
@@ -14,6 +15,7 @@ export function* registerUsersRequest(action) {
 }
 
 export function* LoginUsersRequest(payload) {
+
   try {
     const response = yield call(Login.LoginUsers, payload.payload);
     localStorage.setItem("token", response.data.data.access_token);
