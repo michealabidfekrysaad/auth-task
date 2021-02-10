@@ -3,11 +3,14 @@ import * as Register from "../../network/Register";
 import * as Login from "../../network/Login";
 import * as types from "../types/Auth";
 import * as ACTIONS from "../actions/Auth";
+import history from '../../utils/history';
+
 
 
 export function* registerUsersRequest(action) {
   try {
     const response = yield call(Register.RegisterUsers, action.payload);
+    history.push("/login");    
     yield put(ACTIONS.RegisterReceive(response));
   } catch (err) {
     yield put(ACTIONS.RegisterReceive(err.response.data.errors));
@@ -19,6 +22,7 @@ export function* LoginUsersRequest(payload) {
   try {
     const response = yield call(Login.LoginUsers, payload.payload);
     localStorage.setItem("token", response.data.data.access_token);
+    history.push("/");    
     yield put(ACTIONS.LoginReceive(response.data.data.user));
   } catch (err) {
     yield put(ACTIONS.LoginReceive(err.response.statusText));

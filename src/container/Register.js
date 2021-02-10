@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "../component/Input/Input";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -7,20 +7,12 @@ import { RegisterRequest } from "../store/actions/Auth";
 import { ImageUpload } from "../store/actions/ImageUpload";
 import { useSelector, useDispatch } from "react-redux";
 
-import { useHistory } from "react-router-dom";
 import Loader from "../component/Loader/Loader";
 import ErrorMessage from "../component/ErrorMessage/ErrorMessage";
 
 const Register = () => {
-  const userCreated = useSelector((state) => state.AuthReducer.statusText);
   const loading = useSelector((state) => state.loader);
   const errors = useSelector((state) => state.AuthReducer);
-  const history = useHistory();
-  
-  useEffect(() => {
-    userCreated === "Created" && history.push("/login");
-  }, [userCreated, history]);
-  // to can redirect to login page
 
   const dispatch = useDispatch();
   const initialValues = {
