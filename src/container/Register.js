@@ -49,11 +49,10 @@ const Register = () => {
   const onSubmit = (values, onSubmitProps) => {
     const mobile_number = `+20${values.mobile_number}`;
     values = { ...values, mobile_number };
-
     const Image = new FormData();
     Image.append("file", values.file);
     dispatch(ImageUpload(Image));
-
+    delete values["file"];
     dispatch(RegisterRequest(values));
     onSubmitProps.resetForm();
   };
